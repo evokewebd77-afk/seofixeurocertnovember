@@ -1,0 +1,541 @@
+---
+import TopBar from '../components/TopBar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FloatingActionButtons from '../components/FloatingActionButtons.astro';
+import MobileNav from '../components/MobileNav.jsx';
+import EngagementDrawer from '../components/EngagementDrawer.astro';
+import SiteSearchModal from '../components/SiteSearchModal.astro';
+import { ViewTransitions } from 'astro:transitions';
+import { SITE } from '../data/site';
+
+import '../styles/global.css';
+
+type StructuredData = Record<string, unknown>;
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  keywords?: string;
+  heroImage?: string;
+  noindex?: boolean;
+  structuredData?: StructuredData | StructuredData[];
+}
+
+const {
+  title = "Eurocert Asia | Inspection & Certification Services",
+  description = "Eurocert Asia — inspection, certification, CE marking, management systems and food safety. Trusted partner for ISO, GFSI, social audits and sustainability.",
+  canonicalUrl = "",
+  ogImage = "https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367859/Eurocert/Untitled_design_19_.png.png",
+  keywords = "Eurocert Asia,Eurocert Asia,ISO certification,CE marking,food safety certification,FSSC 22000,BRCGS,GFSI,social audits,Sedex,SMETA,SA8000,inspection services,certification body,India,management systems,ISO 9001,ISO 14001,ISO 45001",
+  heroImage = "",
+  noindex = false,
+  structuredData,
+} = Astro.props;
+
+const SITE_URL = 'https://www.eurocert.asia';
+const pathname = Astro.url.pathname;
+const pathSegments = pathname.split('/').filter(Boolean);
+const isHome = pathSegments.length === 0;
+const pageTitle = title.split('|')[0].trim();
+const canonical = canonicalUrl.startsWith('http') ? canonicalUrl : `${SITE_URL}${canonicalUrl}`;
+const orgId = `${SITE_URL}/#organization`;
+const websiteId = `${SITE_URL}/#website`;
+const localBusinessId = `${SITE_URL}/#localbusiness`;
+
+const segmentLabels: Record<string, string> = {
+  about: 'About',
+  accreditations: 'Accreditations',
+  atex: 'ATEX',
+  'ce-certification': 'CE Marking',
+  cement: 'Cement',
+  'certified-clients': 'Certified Clients',
+  'construction-products': 'Construction Products',
+  contact: 'Contact',
+  'electrical-electronic-products': 'Electrical & Electronic Products',
+  'electrical-safety-audit': 'Electrical Safety Audit',
+  'energy-audit': 'Energy Audit',
+  'food-certification': 'Food Certification',
+  'forced-labour-policy': 'Forced Labour Policy',
+  foundation: 'Foundation',
+  'fssc-v6-transition': 'FSSC 22000 V6 Transition',
+  grievance: 'Grievance',
+  'inspection-testing': 'Inspection & Testing',
+  'iso-37001-2025-certification': 'ISO 37001 Certification',
+  lifts: 'Lifts',
+  'lvd-emc': 'LVD / EMC',
+  machinery: 'Machinery',
+  'management-system': 'Management Systems',
+  'management-systems': 'Management Systems',
+  'marine-equipment': 'Marine Equipment',
+  'medical-devices': 'Medical Devices',
+  news: 'Articles',
+  ped: 'PED',
+  'pi-mark': 'PI Mark',
+  post: 'Articles',
+  'privacy-policy': 'Privacy Policy',
+  'product-catalogue': 'Product Catalogue',
+  'quality-policy': 'Quality Policy',
+  railway: 'Railway',
+  reach: 'REACH',
+  rohs: 'RoHS',
+  'social-audits': 'Social Audits',
+  sustainability: 'Sustainability',
+  training: 'Training',
+  'water-audit': 'Water Audit',
+  'welder-qualifications': 'Welder Qualifications'
+};
+
+const humanize = (value: string) => decodeURIComponent(value)
+  .replace(/-/g, ' ')
+  .replace(/\b\w/g, (character) => character.toUpperCase())
+  .replace(/\bIso\b/g, 'ISO')
+  .replace(/\bFssc\b/g, 'FSSC')
+  .replace(/\bGmp\b/g, 'GMP');
+
+const breadcrumbs = pathSegments.map((segment, index) => ({
+  '@type': 'ListItem',
+  position: index + 1,
+  name: segmentLabels[segment] ?? humanize(segment),
+  item: `${SITE_URL}/${pathSegments.slice(0, index + 1).join('/')}/`
+}));
+
+const servicePaths = [
+  '/management-system/',
+  '/management-systems/',
+  '/food-certification/',
+  '/social-audits/',
+  '/sustainability/',
+  '/ce-certification/',
+  '/training/',
+  '/inspection-testing/',
+  '/electrical-safety-audit/',
+  '/water-audit/',
+  '/energy-audit/',
+  '/atex/',
+  '/ped/',
+  '/lifts/',
+  '/machinery/',
+  '/lvd-emc/',
+  '/railway/',
+  '/marine-equipment/',
+  '/medical-devices/',
+  '/construction-products/',
+  '/cement/',
+  '/rohs/',
+  '/reach/'
+];
+const isServicePage = servicePaths.some((route) => pathname === route || pathname.startsWith(route));
+const isArticle = pathname.startsWith('/post/');
+
+const pageSources = import.meta.glob('../pages/**/*.astro', {
+  query: '?raw',
+  import: 'default',
+  eager: true
+}) as Record<string, string>;
+const sourceKey = isHome ? '../pages/index.astro' : `../pages/${pathSegments.join('/')}.astro`;
+const pageSource = pageSources[sourceKey] ?? '';
+
+const decodeHtml = (value: string) => value
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/&nbsp;/g, ' ')
+  .replace(/&amp;/g, '&')
+  .replace(/&lt;/g, '<')
+  .replace(/&gt;/g, '>')
+  .replace(/&quot;/g, '"')
+  .replace(/&#39;|&apos;/g, "'")
+  .replace(/\s+/g, ' ')
+  .trim();
+
+const faqs: StructuredData[] = [];
+for (const detailsMatch of pageSource.matchAll(/<details\b[^>]*>([\s\S]*?)<\/details>/gi)) {
+  const details = detailsMatch[1] ?? '';
+  const question = details.match(/<summary[^>]*>([\s\S]*?)<\/summary>/i)?.[1];
+  const answer = details.match(/<div[^>]*class=["'][^"']*\bans\b[^"']*["'][^>]*>([\s\S]*?)<\/div>/i)?.[1];
+  if (question && answer) {
+    faqs.push({
+      '@type': 'Question',
+      name: decodeHtml(question),
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: decodeHtml(answer)
+      }
+    });
+  }
+}
+
+const extraStructuredData = structuredData
+  ? Array.isArray(structuredData) ? structuredData : [structuredData]
+  : [];
+
+const graph: StructuredData[] = [
+  {
+    '@type': 'Organization',
+    '@id': orgId,
+    name: SITE.name,
+    legalName: 'Eurocert Inspection Services Pvt. Ltd.',
+    url: SITE_URL,
+    logo: {
+      '@type': 'ImageObject',
+      '@id': `${SITE_URL}/#logo`,
+      url: ogImage
+    },
+    image: ogImage,
+    foundingDate: String(SITE.establishedYear),
+    email: SITE.contact.email,
+    telephone: SITE.contact.phoneHref,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: SITE.contact.addressLine1,
+      addressLocality: 'Panchkula',
+      addressRegion: 'Haryana',
+      postalCode: '134109',
+      addressCountry: 'IN'
+    },
+    contactPoint: [{
+      '@type': 'ContactPoint',
+      contactType: 'customer service',
+      email: SITE.contact.email,
+      telephone: SITE.contact.phoneHref,
+      areaServed: 'Worldwide',
+      availableLanguage: ['English', 'Hindi']
+    }],
+    sameAs: [
+      'https://www.facebook.com/people/Eurocert-Inspection-Services-Pvt-Ltd/100095339032882/',
+      'https://www.instagram.com/euro_cert/',
+      'https://www.linkedin.com/company/eurocert-inspection-services-pvt-ltd/',
+      'https://x.com/EUROCERT3',
+      'https://www.youtube.com/@eurocert'
+    ]
+  },
+  {
+    '@type': 'WebSite',
+    '@id': websiteId,
+    url: SITE_URL,
+    name: SITE.name,
+    inLanguage: 'en-IN',
+    publisher: { '@id': orgId }
+  },
+  {
+    '@type': 'ProfessionalService',
+    '@id': localBusinessId,
+    name: SITE.name,
+    url: SITE_URL,
+    image: ogImage,
+    email: SITE.contact.email,
+    telephone: SITE.contact.phoneHref,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: SITE.contact.addressLine1,
+      addressLocality: 'Panchkula',
+      addressRegion: 'Haryana',
+      postalCode: '134109',
+      addressCountry: 'IN'
+    },
+    areaServed: 'Worldwide',
+    priceRange: '$$',
+    parentOrganization: { '@id': orgId },
+    knowsAbout: SITE.standards.slice(0, 12)
+  },
+  {
+    '@type': 'WebPage',
+    '@id': `${canonical}#webpage`,
+    url: canonical,
+    name: title,
+    description,
+    isPartOf: { '@id': websiteId },
+    about: { '@id': orgId },
+    primaryImageOfPage: { '@type': 'ImageObject', url: ogImage },
+    inLanguage: 'en-IN'
+  }
+];
+
+if (!isHome) {
+  graph.push({
+    '@type': 'BreadcrumbList',
+    '@id': `${canonical}#breadcrumb`,
+    itemListElement: breadcrumbs
+  });
+}
+
+if (isServicePage) {
+  graph.push({
+    '@type': 'Service',
+    '@id': `${canonical}#service`,
+    name: pageTitle,
+    description,
+    serviceType: pageTitle,
+    url: canonical,
+    provider: { '@id': orgId },
+    areaServed: 'Worldwide'
+  });
+}
+
+if (isArticle) {
+  graph.push({
+    '@type': 'Article',
+    '@id': `${canonical}#article`,
+    headline: pageTitle,
+    description,
+    image: ogImage,
+    url: canonical,
+    mainEntityOfPage: canonical,
+    author: { '@id': orgId },
+    publisher: { '@id': orgId },
+    inLanguage: 'en-IN'
+  });
+}
+
+if (faqs.length > 0) {
+  graph.push({
+    '@type': 'FAQPage',
+    '@id': `${canonical}#faq`,
+    mainEntity: faqs
+  });
+}
+
+graph.push(...extraStructuredData);
+
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })
+  .replace(/</g, '\\u003c')
+  .replace(/>/g, '\\u003e')
+  .replace(/&/g, '\\u0026');
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=AW-968348137"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-968348137');
+    </script>
+    <!-- Event snippet for Click to call conversion page -->
+    <script is:inline>
+      function gtag_report_conversion(url) {
+        var callback = function () {
+          if (typeof(url) != 'undefined') {
+            window.location = url;
+          }
+        };
+        gtag('event', 'conversion', {
+            'send_to': 'AW-968348137/EhCLCNCA2JYdEOmj380D',
+            'value': 1.0,
+            'currency': 'INR',
+            'event_callback': callback
+        });
+        return false;
+      }
+    </script>
+    <!-- Google Ads click id (gclid/gbraid/wbraid) capture for form attribution -->
+    <script is:inline>
+      window.eurocertGclid = (function () {
+        try {
+          var keys = ['gclid', 'gbraid', 'wbraid'];
+          var qs = new URLSearchParams(window.location.search);
+          for (var i = 0; i < keys.length; i++) {
+            var v = qs.get(keys[i]);
+            if (v) {
+              window.eurocertIsGoogleAds = true;
+              window.localStorage.setItem('ec_gclid', keys[i].toUpperCase() + '=' + v);
+              window.localStorage.setItem('ec_gclid_ts', String(Date.now()));
+              break;
+            }
+          }
+          var stored = window.localStorage.getItem('ec_gclid');
+          var ts = Number(window.localStorage.getItem('ec_gclid_ts') || 0);
+          if (stored && ts && (Date.now() - ts) < 7776000000) {
+            window.eurocertIsGoogleAds = true;
+            return stored;
+          }
+          var m = document.cookie.match(/(?:^|;\s*)_gcl_(?:aw|dc)=([^;]+)/);
+          if (m) {
+            var parts = decodeURIComponent(m[1]).split('.');
+            window.eurocertIsGoogleAds = true;
+            return 'GCLID=' + parts[parts.length - 1];
+          }
+          return '';
+        } catch (e) {
+          return '';
+        }
+      })();
+    </script>
+    <script is:inline>
+      (function () {
+        var standardPhone = '919316012883';
+        var contactPhone = '918065495072';
+
+        function updatePhoneLinks() {
+          document.querySelectorAll('a[href="tel:+' + standardPhone + '"]').forEach(function (link) {
+            link.setAttribute('href', 'tel:+' + contactPhone);
+            var onclick = link.getAttribute('onclick');
+            if (onclick) link.setAttribute('onclick', onclick.replace('tel:+' + standardPhone, 'tel:+' + contactPhone));
+          });
+        }
+
+        document.addEventListener('DOMContentLoaded', updatePhoneLinks);
+        document.addEventListener('astro:page-load', updatePhoneLinks);
+        if (document.readyState !== 'loading') updatePhoneLinks();
+      })();
+    </script>
+    <!-- Click tracker for email, phone, and WhatsApp links -->
+    <script is:inline>
+      var EC_EMAIL_CONV = 'AW-968348137/EhCLCNCA2JYdEOmj380D';
+      window.EC_TRACK_URL = 'https://damnart-ai-guladab.n8n-wsk.com/webhook/eurocert-vanshita-landing';
+      (function () {
+        function ecPush(channel, value) {
+          var gclid = window.eurocertGclid || '';
+          var payload = {
+            event: 'ec_click',
+            formType: 'click',
+            channel: channel,
+            value: value,
+            email: channel === 'email' ? value : '',
+            phone: channel === 'phone' ? value : '',
+            gclid: gclid,
+            page: location.href,
+            referrer: document.referrer || '',
+            ua: navigator.userAgent,
+            ts: new Date().toISOString()
+          };
+          try { if (window.dataLayer) window.dataLayer.push(payload); } catch (e) {}
+          try {
+            if (typeof window.gtag === 'function') {
+              window.gtag('event', channel + '_click', { link_url: value, gclid: gclid });
+              if (channel === 'email' && EC_EMAIL_CONV) {
+                window.gtag('event', 'conversion', { send_to: EC_EMAIL_CONV, value: 1.0, currency: 'INR', gclid: gclid });
+              }
+            }
+          } catch (e) {}
+          try {
+            if (window.EC_TRACK_URL) {
+              var body = JSON.stringify(payload);
+              if (navigator.sendBeacon) {
+                navigator.sendBeacon(window.EC_TRACK_URL, new Blob([body], { type: 'text/plain;charset=utf-8' }));
+              } else {
+                fetch(window.EC_TRACK_URL, { method: 'POST', keepalive: true, mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: body });
+              }
+            }
+          } catch (e) {}
+        }
+        document.addEventListener('click', function (ev) {
+          var a = ev.target && ev.target.closest ? ev.target.closest('a[href]') : null;
+          if (!a) return;
+          var href = a.getAttribute('href') || '';
+          if (href.indexOf('mailto:') === 0) ecPush('email', href.slice(7).split('?')[0]);
+          else if (href.indexOf('tel:') === 0) ecPush('phone', href.slice(4));
+          else if (href.indexOf('https://wa.me/') === 0 || href.indexOf('https://api.whatsapp.com/') === 0) ecPush('whatsapp', href);
+        }, true);
+      })();
+    </script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <link rel="author" href="https://www.eurocert.asia" />
+    <meta name="author" content="Eurocert Asia" />
+    <meta name="creator" content="Eurocert Asia" />
+    <meta name="publisher" content="Eurocert Asia" />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    <script type="application/ld+json" is:inline set:html={jsonLd}></script>
+    {heroImage && <link rel="preload" as="image" href={heroImage} fetchpriority="high" />}
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="Eurocert Asia" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Eurocert Asia" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Icons -->
+    <link rel="icon" href="https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782368068/eurocert/favicon.ico.ico" sizes="any" />
+    <link rel="icon" href="https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782368070/eurocert/favicon.png.png" type="image/png" sizes="64x64" />
+    <link rel="apple-touch-icon" href="https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782368070/eurocert/favicon.png.png" />
+
+    <!-- FontAwesome CDN (non-blocking: icons swap in via font-display:swap) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'" />
+    <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" /></noscript>
+
+    <!-- Google Tag Manager -->
+    <script is:inline>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-KBCG9T4M');
+    </script>
+    <ViewTransitions />
+    <style is:global>
+      img[src="/sa.png"] {
+        object-fit: contain !important;
+        background-color: #fff;
+        opacity: 1 !important;
+      }
+
+      a[href="/social-audits/sa-8000/"] > div.bg-cover {
+        background-size: contain !important;
+        background-repeat: no-repeat;
+        background-color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KBCG9T4M" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe>
+    </noscript>
+
+    <div class="relative isolate min-h-[100dvh] w-full flex flex-col">
+      <TopBar />
+      <Header />
+      <div class="relative z-0 flex-1 flex flex-col min-h-0 w-full">
+        <slot />
+      </div>
+      <Footer />
+    <FloatingActionButtons />
+    </div>
+
+    <!-- React Islands (hydrate only when the hamburger is visible) -->
+    <MobileNav client:media="(max-width: 1279px)" />
+
+    <!-- Site search modal (vanilla JS, no hydration required) -->
+    <SiteSearchModal />
+
+    <!-- Recent Posts / Contact Us drawer -->
+    <EngagementDrawer />
+
+    <!-- SOFIA: docked launcher only; the centred modal appears solely after Maximize. -->
+    <script is:inline>
+      (function () {
+        if (window.__sophiaLoaderArmed) return;
+        window.__sophiaLoaderArmed = true;
+        var s = document.createElement('script');
+        s.src = '/sophia-widget.js?v=2';
+        s.async = true;
+        document.body.appendChild(s);
+      })();
+    </script>
+  </body>
+</html>
