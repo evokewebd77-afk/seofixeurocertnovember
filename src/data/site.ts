@@ -5,7 +5,7 @@ export const SITE = {
   establishedYear: 1998,
   metrics: {
     yearsExperience: '25+',
-    countriesServed: 29,
+    countriesServed: '29+',
     continentsServed: 5,
     clientsCertified: '1000+',
     certificationTypes: '50+'

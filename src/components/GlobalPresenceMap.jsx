@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { SITE } from '../data/site';
 
 const COUNTRIES = [
-  { name: "Greece", desc: "Global Headquarters - Eurocert Asia (est. 1998), Greece", position: [39.0742, 21.8243], isHQ: true },
+  { name: "Greece", desc: "Eurocert S.A. was established in Athens in 1998", position: [39.0742, 21.8243], isHQ: true },
   { name: "Australia", desc: "Eurocert Asia International Operations", position: [-25.2744, 133.7751] },
   { name: "Bahrain", desc: "Eurocert Asia Regional Operations", position: [26.0667, 50.5577] },
   { name: "Bangladesh", desc: "Eurocert Asia Regional Operations", position: [23.6850, 90.3563] },
@@ -343,7 +343,7 @@ export default function GlobalPresenceMap() {
           </div>
         </div>
 
-        {/* 49 Country Chips Grid */}
+        {/* Country Chips Grid */}
         <div className="rounded-3xl border border-white/10 bg-[#061021]/90 backdrop-blur-md p-6 sm:p-8 shadow-2xl">
           <div className="flex flex-wrap gap-2 sm:gap-2.5 justify-center">
             {filteredCountries.map((c) => {
