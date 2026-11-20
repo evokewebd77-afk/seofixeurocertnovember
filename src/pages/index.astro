@@ -2,6 +2,21 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE } from '../data/site';
 import CertificationsStandards from '../components/CertificationsStandards.astro';
+
+const presenceCountries = [
+  'India',
+  'Germany',
+  'France',
+  'Italy',
+  'Spain',
+  'United Kingdom',
+  'Greece',
+  'Turkey',
+  'UAE',
+  'China',
+  'Bangladesh',
+  'Sri Lanka',
+];
 ---
 
 <BaseLayout 
@@ -32,10 +47,20 @@ import CertificationsStandards from '../components/CertificationsStandards.astro
     <div class="max-w-6xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-slate-200 bg-white">
       <img src="/mapp.png" alt="Eurocert Asia global presence map highlighting operations across Europe and Asia" class="w-full h-auto object-contain" loading="lazy" />
     </div>
-        <div class="mt-10 max-w-5xl mx-auto text-center">
-      <p class="text-slate-600 text-base leading-relaxed">
-        India, Germany, France, Italy, Spain, United Kingdom, Greece, Turkey, UAE, China, Bangladesh, Sri Lanka
-      </p>
+    <div class="mx-auto mt-10 max-w-6xl">
+      <h3 class="mb-5 text-center heading-font text-xs font-bold uppercase tracking-[0.3em] text-slate-500">
+        Countries across our global network
+      </h3>
+      <ul class="flex flex-wrap justify-center gap-3" aria-label="Countries across our global network">
+        {presenceCountries.map((country) => (
+          <li class="inline-flex items-center gap-2.5 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[#d8ad4c]/70 hover:text-[#001a33] hover:shadow-md">
+            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-[#d8ad4c]/10 text-[#b58a2a]" aria-hidden="true">
+              <i class="fas fa-location-dot text-[10px]"></i>
+            </span>
+            {country}
+          </li>
+        ))}
+      </ul>
     </div>
   </div>
 </section>
