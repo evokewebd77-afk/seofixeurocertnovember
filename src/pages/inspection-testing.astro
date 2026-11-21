@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const capabilities = [
+  {
+    title: 'Pre-shipment & Consignment Inspection',
+    description: 'Independent verification of quantity, quality, packaging, marking and documentation before goods move across borders.',
+    icon: 'fa-boxes-stacked'
+  },
+  {
+    title: 'Product & Material Testing Coordination',
+    description: 'Coordinated laboratory testing for products, raw materials and components against applicable national and international requirements.',
+    icon: 'fa-flask'
+  },
+  {
+    title: 'Factory & Process Assessment',
+    description: 'On-site assessment of production controls, traceability, calibration, sampling and process capability at source.',
+    icon: 'fa-industry'
+  },
+  {
+    title: 'Statutory & Regulatory Verification',
+    description: 'Document and conformity checks for regulated products, including CE marking technical files and declarations of conformity.',
+    icon: 'fa-file-circle-check'
+  }
+];
+
+const process = [
+  { step: '01', title: 'Scope Review', description: 'We confirm product category, destination market, applicable requirements and inspection stage.' },
+  { step: '02', title: 'Planning', description: 'A qualified inspector is assigned with a checklist aligned to the agreed scope and sampling plan.' },
+  { step: '03', title: 'On-site Inspection', description: 'We verify goods, processes and records, capture evidence and raise observations where needed.' },
+  { step: '04', title: 'Reporting', description: 'A clear inspection report is issued with findings, supporting evidence and corrective-action notes.' }
+];
+---
+
+<BaseLayout
+  title="Inspection & Testing Services | Eurocert Asia"
+  description="Eurocert Asia provides third-party inspection, product testing coordination, factory assessment and regulatory verification for products, processes and systems."
+  canonicalUrl="https://www.eurocert.asia/inspection-testing/"
+  ogImage="https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367859/eurocert/Untitled_design_19_.png.png"
+  heroImage="https://res.cloudinary.com/didtfhfme/image/upload/f_auto,q_auto:good,w_1600/v1783575185/741523514_1940695959929964_6653370092002842626_n.webp_p2r1gq.webp"
+  keywords="inspection services,testing services,third-party inspection,pre-shipment inspection,factory audit,product testing,CE marking,Eurocert Asia"
+>
+  <section class="relative min-h-[58vh] flex items-center overflow-hidden bg-[#030a16]">
+    <img src="https://res.cloudinary.com/didtfhfme/image/upload/f_auto,q_auto:good,w_1600/v1783575185/741523514_1940695959929964_6653370092002842626_n.webp_p2r1gq.webp" alt="Industrial inspection and testing" class="absolute inset-0 h-full w-full object-cover opacity-35" decoding="async" fetchpriority="high" />
+    <div class="absolute inset-0 bg-gradient-to-r from-[#030a16] via-[#030a16]/85 to-[#030a16]/55"></div>
+    <div class="relative z-10 container mx-auto px-6 py-20">
+      <div class="max-w-3xl">
+        <p class="heading-font text-[11px] font-bold uppercase tracking-[0.4em] text-eurogold-400 mb-5">Independent Verification</p>
+        <h1 class="heading-font text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">Inspection &amp; Testing <span class="text-eurogold-400">Services</span></h1>
+        <p class="text-white/75 text-base md:text-lg leading-relaxed mb-9">Objective evidence for products, processes and systems. We help manufacturers, exporters and buyers confirm conformity before goods reach the market.</p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="/contact/" class="inline-flex items-center justify-center gap-3 rounded-full bg-eurogold-400 px-8 py-4 heading-font text-xs font-bold uppercase tracking-[0.18em] text-[#031022] hover:bg-eurogold-300 transition-all">Request an Inspection <i class="fas fa-arrow-right"></i></a>
+          <a href="/accreditations/" class="inline-flex items-center justify-center gap-3 rounded-full border border-white/25 px-8 py-4 heading-font text-xs font-bold uppercase tracking-[0.18em] text-white hover:bg-white/10 transition-all">View Accreditations</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <p class="heading-font text-[11px] font-bold uppercase tracking-[0.4em] text-euro-600 mb-3">What We Cover</p>
+        <h2 class="heading-font text-3xl md:text-4xl font-bold text-slate-900">Practical inspection, measurable outcomes</h2>
+        <p class="text-slate-500 text-sm md:text-base leading-relaxed mt-4">Our inspection and testing coordination services are tailored to product risk, buyer requirements and the regulatory expectations of the destination market.</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {capabilities.map((item) => (
+          <article class="rounded-2xl border border-slate-100 bg-slate-50 p-6 hover:-translate-y-1 hover:shadow-xl transition-all">
+            <div class="w-12 h-12 rounded-xl bg-eurogold-400/15 text-euro-600 flex items-center justify-center mb-5">
+              <i class={`fas ${item.icon} text-lg`} aria-hidden="true"></i>
+            </div>
+            <h3 class="heading-font text-base font-bold text-slate-900 mb-3">{item.title}</h3>
+            <p class="text-slate-500 text-[13px] leading-relaxed">{item.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-[#f8fafc]">
+    <div class="container mx-auto px-6">
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <div>
+          <p class="heading-font text-[11px] font-bold uppercase tracking-[0.4em] text-euro-600 mb-3">How It Works</p>
+          <h2 class="heading-font text-3xl md:text-4xl font-bold text-slate-900 mb-5">A clear path from scope to report</h2>
+          <p class="text-slate-500 text-sm md:text-base leading-relaxed">Every assignment is planned around the product, process and market. You receive documented findings that can be shared with buyers, regulators and internal quality teams.</p>
+        </div>
+        <div class="grid gap-4">
+          {process.map((item) => (
+            <div class="flex gap-5 rounded-2xl border border-slate-100 bg-white p-5">
+              <span class="heading-font text-xs font-bold text-euro-600 pt-1">{item.step}</span>
+              <div>
+                <h3 class="heading-font text-sm font-bold text-slate-900 mb-1">{item.title}</h3>
+                <p class="text-slate-500 text-[13px] leading-relaxed">{item.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="container mx-auto px-6 max-w-4xl">
+      <div class="text-center mb-10">
+        <p class="heading-font text-[11px] font-bold uppercase tracking-[0.4em] text-euro-600 mb-3">FAQ</p>
+        <h2 class="heading-font text-3xl md:text-4xl font-bold text-slate-900">Inspection &amp; testing questions</h2>
+      </div>
+      <div class="grid gap-4">
+        <details class="group rounded-2xl border border-slate-200 bg-white p-5">
+          <summary class="cursor-pointer list-none heading-font text-sm font-bold text-slate-900 flex justify-between items-center gap-4">What can be inspected?<i class="fas fa-chevron-down text-euro-600 text-xs transition-transform group-open:rotate-180" aria-hidden="true"></i></summary>
+          <div class="ans mt-3 text-slate-500 text-[14px] leading-relaxed">We inspect consumer goods, industrial products, food and agriculture consignments, machinery, electrical equipment, packaging and raw materials. The exact scope is confirmed before the assignment begins.</div>
+        </details>
+        <details class="group rounded-2xl border border-slate-200 bg-white p-5">
+          <summary class="cursor-pointer list-none heading-font text-sm font-bold text-slate-900 flex justify-between items-center gap-4">Can inspection be combined with testing?<i class="fas fa-chevron-down text-euro-600 text-xs transition-transform group-open:rotate-180" aria-hidden="true"></i></summary>
+          <div class="ans mt-3 text-slate-500 text-[14px] leading-relaxed">Yes. Where testing is required, we coordinate sampling and laboratory testing with accredited facilities and combine the results with the inspection report.</div>
+        </details>
+        <details class="group rounded-2xl border border-slate-200 bg-white p-5">
+          <summary class="cursor-pointer list-none heading-font text-sm font-bold text-slate-900 flex justify-between items-center gap-4">Do you provide consultancy for products you inspect?<i class="fas fa-chevron-down text-euro-600 text-xs transition-transform group-open:rotate-180" aria-hidden="true"></i></summary>
+          <div class="ans mt-3 text-slate-500 text-[14px] leading-relaxed">No. To protect impartiality, Eurocert Asia does not provide design, implementation or consultancy services that could compromise an independent assessment.</div>
+        </details>
+        <details class="group rounded-2xl border border-slate-200 bg-white p-5">
+          <summary class="cursor-pointer list-none heading-font text-sm font-bold text-slate-900 flex justify-between items-center gap-4">How quickly can an inspection be arranged?<i class="fas fa-chevron-down text-euro-600 text-xs transition-transform group-open:rotate-180" aria-hidden="true"></i></summary>
+          <div class="ans mt-3 text-slate-500 text-[14px] leading-relaxed">Timing depends on location, product category and inspector availability. Share the inspection location and required date and we will confirm the earliest feasible slot.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-14 bg-[#030a16]">
+    <div class="container mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <div>
+        <h2 class="heading-font text-2xl md:text-3xl font-bold text-white mb-2">Need an independent inspection?</h2>
+        <p class="text-white/65 text-sm md:text-base">Tell us what you need verified and where.</p>
+      </div>
+      <a href="/contact/" class="inline-flex items-center justify-center gap-3 rounded-full bg-eurogold-400 px-8 py-4 heading-font text-xs font-bold uppercase tracking-[0.18em] text-[#031022] hover:bg-eurogold-300 transition-all">Contact Eurocert Asia <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </section>
+</BaseLayout>
