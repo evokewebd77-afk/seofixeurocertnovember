@@ -7,7 +7,7 @@ const CE_CARDS = [
     shortTitle: 'Construction Products (CPR)',
     href: '/construction-products/',
     description: 'Construction products must comply with the Construction Products Regulation (CPR) to be placed on the EU market. We help manufacturers achieve CE marking for construction materials, ensuring they meet all safety and performance requirements.',
-    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367580/eurocert/CONSTRUCTION.jpeg.jpg',
+    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367580/eurocert/CONSTRUCTION.jpeg.webp',
     items: ['Building materials and components', 'Structural elements', 'Insulation materials', 'Roofing and flooring products', 'Windows and doors']
   },
   {
@@ -16,7 +16,7 @@ const CE_CARDS = [
     shortTitle: 'Lifts Directive (2014/33/EU)',
     href: '/lifts/',
     description: 'Lifts and lifting equipment must comply with the Lifts Directive (2014/33/EU) to be sold in the EU. We provide comprehensive certification services for all types of lifts and lifting equipment.',
-    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367739/eurocert/LIFTS.jpeg.jpg',
+    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367739/eurocert/LIFTS.jpeg.webp',
     items: ['Passenger lifts', 'Goods lifts', 'Service lifts', 'Lifting platforms', 'Safety components for lifts']
   },
   {
@@ -25,7 +25,7 @@ const CE_CARDS = [
     shortTitle: 'Machinery Directive (2006/42/EC)',
     href: '/machinery/',
     description: 'The Machinery Directive (2006/42/EC) requires that machinery placed on the EU market must be CE marked. We assist manufacturers in achieving compliance for all types of machinery and equipment.',
-    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367740/eurocert/MACHINERY.jpeg.jpg',
+    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367740/eurocert/MACHINERY.jpeg.webp',
     items: ['Industrial machinery', 'Agricultural machinery', 'Construction machinery', 'Food processing equipment', 'Packaging machinery']
   },
   {
@@ -34,7 +34,7 @@ const CE_CARDS = [
     shortTitle: 'Cement Products',
     href: '/cement/',
     description: 'Cement products must comply with harmonized European standards to receive CE marking. We provide certification services for various types of cement products.',
-    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367829/eurocert/R1.jpeg.jpg',
+    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367829/eurocert/R1.jpeg.webp',
     items: ['Portland cement', 'Composite cement', 'Specialized cement products', 'Performance testing and assessment']
   },
   {
@@ -43,7 +43,7 @@ const CE_CARDS = [
     shortTitle: 'Pressure Equipment Directive',
     href: '/ped/',
     description: 'The Pressure Equipment Directive (PED) applies to pressure equipment and assemblies with a maximum allowable pressure greater than 0.5 bar. We provide comprehensive PED certification services.',
-    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367819/eurocert/PED.jpeg.jpg',
+    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367819/eurocert/PED.jpeg.webp',
     items: ['Pressure vessels', 'Steam generators', 'Piping systems', 'Safety accessories', 'Pressure accessories']
   },
   {
@@ -52,7 +52,7 @@ const CE_CARDS = [
     shortTitle: 'Restriction of Hazardous Substances',
     href: '/rohs/',
     description: 'The RoHS Directive restricts the use of certain hazardous substances in electrical and electronic equipment. We help manufacturers ensure compliance with RoHS requirements.',
-    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367856/eurocert/ROHS.jpeg.jpg',
+    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367856/eurocert/ROHS.jpeg.webp',
     items: ['RoHS compliance testing', 'Material analysis', 'Documentation support', 'Supply chain verification']
   },
   {
@@ -61,7 +61,7 @@ const CE_CARDS = [
     shortTitle: 'Low Voltage & EMC Directive',
     href: '/lvd-emc/',
     description: 'The Low Voltage Directive (LVD) and Electromagnetic Compatibility (EMC) Directive are essential for electrical and electronic equipment sold in the EU. We provide comprehensive CE marking services for LVD and EMC compliance.',
-    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367742/eurocert/LVDEMC.jpeg.jpg',
+    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367742/eurocert/LVDEMC.jpeg.webp',
     items: ['LVD compliance assessment', 'EMC testing and certification', 'Technical documentation preparation', 'CE marking support']
   },
   {
@@ -70,7 +70,7 @@ const CE_CARDS = [
     shortTitle: 'LVD / EMC / RoHS',
     href: '/electrical-electronic-products/',
     description: 'Comprehensive CE compliance support for electrical and electronic products across LVD, EMC, and RoHS directives.',
-    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367833/eurocert/R7.jpeg.jpg',
+    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367833/eurocert/R7.jpeg.webp',
     items: ['Product classification and directive mapping', 'LVD and EMC testing coordination', 'RoHS material compliance verification', 'Technical file and declaration of conformity support']
   },
   {
@@ -79,7 +79,7 @@ const CE_CARDS = [
     shortTitle: 'Chemical Substances Regulation',
     href: '/reach/',
     description: 'REACH (Registration, Evaluation, Authorisation and Restriction of Chemicals) is a European Union regulation addressing the production and use of chemical substances. We provide REACH compliance services to help manufacturers and importers meet regulatory requirements.',
-    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367846/eurocert/REACH.jpeg.jpg',
+    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367846/eurocert/REACH.jpeg.webp',
     items: ['REACH compliance assessment', 'Chemical substance registration support', 'Restricted substance verification', 'Supply chain compliance']
   },
   {
@@ -88,7 +88,7 @@ const CE_CARDS = [
     shortTitle: 'Explosive Atmospheres',
     href: '/atex/',
     description: 'ATEX (Atmospheres Explosibles) certification is required for equipment and protective systems intended for use in potentially explosive atmospheres. We provide comprehensive ATEX certification services.',
-    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367958/eurocert/c10.png.png',
+    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367958/eurocert/c10.png.webp',
     items: ['ATEX equipment certification', 'Explosive atmosphere risk assessment', 'Protective systems certification', 'Zone classification support']
   },
   {
@@ -97,7 +97,7 @@ const CE_CARDS = [
     shortTitle: 'TPED Directive',
     href: '/pi-mark/',
     description: 'The PI (Periodic Inspection) Mark is required for transportable pressure equipment in accordance with the Transportable Pressure Equipment Directive (TPED). We provide PI Mark certification services.',
-    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367825/eurocert/PI-MARK.jpeg.jpg',
+    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367825/eurocert/PI-MARK.jpeg.webp',
     items: ['PI Mark certification', 'Transportable pressure equipment inspection', 'TPED compliance verification', 'Periodic inspection services']
   },
   {
@@ -106,7 +106,7 @@ const CE_CARDS = [
     shortTitle: 'Railway Systems & Components',
     href: '/railway/',
     description: 'Railway Interoperability certification ensures that railway systems, subsystems, and components meet European standards for safe and efficient cross-border railway operations. We provide comprehensive railway interoperability certification services.',
-    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367839/eurocert/RAILWAY.jpeg.jpg',
+    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367839/eurocert/RAILWAY.jpeg.webp',
     items: ['Railway interoperability certification', 'TSI compliance', 'Railway component certification', 'EN 15085 welding certification']
   },
   {
@@ -115,7 +115,7 @@ const CE_CARDS = [
     shortTitle: 'MED Wheel Mark',
     href: '/marine-equipment/',
     description: 'The Marine Equipment Directive (MED) ensures that marine equipment meets safety and environmental protection standards for use on EU ships. We provide MED certification services.',
-    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367744/eurocert/MARINE.jpeg.jpg',
+    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367744/eurocert/MARINE.jpeg.webp',
     items: ['Marine Equipment Directive certification', 'MED wheel mark certification', 'Marine equipment type approval', 'Ship safety equipment certification']
   },
   {
@@ -124,7 +124,7 @@ const CE_CARDS = [
     shortTitle: 'Medical Devices',
     href: '/medical-devices/',
     description: 'Regulatory support for medical devices including MDR classification, technical documentation, clinical evaluation, and post-market compliance.',
-    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367751/eurocert/MEDICAL-DEVICES.jpeg.jpg',
+    image: 'https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367751/eurocert/MEDICAL-DEVICES.jpeg.webp',
     items: ['Device classification and conformity route', 'Technical documentation and CER support', 'ISO 14971 risk management integration', 'EU representative and UK responsible person support']
   }
 ];

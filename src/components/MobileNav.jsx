@@ -129,7 +129,7 @@ export default function MobileNav() {
           <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
             <a href="/" onClick={() => setIsOpen(false)} className="inline-block">
               <img 
-                src="https://res.cloudinary.com/dwnnakrrh/image/upload/f_auto,q_auto:good,w_1600/v1782367859/eurocert/Untitled_design_19_.png.png" 
+                src="https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367859/eurocert/Untitled_design_19_.png.webp" 
                 alt="Eurocert Asia Logo" 
                 className="h-10 w-auto" 
               />
