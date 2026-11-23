@@ -1,5 +1,5 @@
 const SHEET_NAME = 'Contact Leads';
-const NOTIFY_EMAIL = 'damnart.seo@gmail.com';
+const NOTIFY_EMAIL = 'damnart.seo@gmail.com,bdm@eurocert.in';
 
 function doPost(e) {
   const lock = LockService.getScriptLock();
