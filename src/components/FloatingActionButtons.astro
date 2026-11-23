@@ -12,12 +12,12 @@ const btnClass =
 
 <div
   id="ec-fabs"
-  class="fixed bottom-8 right-8 z-50 flex flex-col gap-3 transition-all duration-400 opacity-0 translate-y-6 pointer-events-none"
+  class="fixed bottom-24 right-4 z-50 flex flex-col items-end gap-2 transition-all duration-400 opacity-0 translate-y-6 pointer-events-none sm:bottom-8 sm:right-8 sm:gap-3"
 >
   <a
     href={`tel:+${phoneNum}`}
     onclick={`return gtag_report_conversion('tel:+${phoneNum}');`}
-    class={`max-sm:hidden ${btnClass}`}
+    class={btnClass}
     aria-label={`Call us (${SITE.contact.phone})`}
     title={`Call us: ${SITE.contact.phone}`}
   >
@@ -38,7 +38,7 @@ const btnClass =
   <button
     type="button"
     onclick="window.scrollTo({top:0,behavior:'smooth'})"
-    class={`max-sm:hidden ${btnClass}`}
+    class={btnClass}
     aria-label="Scroll to top"
     title="Back to top"
   >
@@ -53,7 +53,8 @@ const btnClass =
     function updateFabs() {
       var el = document.getElementById('ec-fabs');
       if (!el) return;
-      var show = window.scrollY > 200;
+      var isMobile = window.matchMedia('(max-width: 639px)').matches;
+      var show = isMobile || window.scrollY > 200;
       el.classList.toggle('opacity-100', show);
       el.classList.toggle('translate-y-0', show);
       el.classList.toggle('opacity-0', !show);
@@ -61,6 +62,7 @@ const btnClass =
       el.classList.toggle('pointer-events-none', !show);
     }
     updateFabs();
+    window.addEventListener('resize', updateFabs);
     window.addEventListener('scroll', updateFabs, { passive: true });
   }
 </script>

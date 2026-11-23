@@ -517,8 +517,99 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': grap
     <FloatingActionButtons />
     </div>
 
-    <!-- React Islands (hydrate only when the hamburger is visible) -->
-    <MobileNav client:media="(max-width: 1279px)" />
+    <MobileNav />
+
+    <script is:inline>
+      (function () {
+        var menu = document.getElementById('mobile-nav');
+        var toggle = document.getElementById('open-mobile-menu-btn');
+        if (!menu || !toggle) return;
+
+        var previousOverflow = '';
+
+        var closeDropdowns = function () {
+          Array.prototype.forEach.call(menu.querySelectorAll('[data-mobile-nav-panel]'), function (panel) {
+            panel.classList.add('hidden');
+          });
+          Array.prototype.forEach.call(menu.querySelectorAll('[data-mobile-nav-toggle]'), function (button) {
+            button.setAttribute('aria-expanded', 'false');
+            var chevron = button.querySelector('i');
+            if (chevron) {
+              chevron.classList.remove('rotate-180', 'text-eurogold-400');
+            }
+          });
+        };
+
+        var setOpen = function (open) {
+          menu.classList.toggle('hidden', !open);
+          menu.classList.toggle('flex', open);
+          menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+
+          var toggleIcon = toggle.querySelector('i');
+          if (toggleIcon) {
+            toggleIcon.classList.toggle('fa-bars', !open);
+            toggleIcon.classList.toggle('fa-times', open);
+          }
+
+          if (open) {
+            document.body.style.overflow = 'hidden';
+          } else {
+            document.body.style.overflow = previousOverflow;
+            closeDropdowns();
+          }
+        };
+
+        document.addEventListener('click', function (event) {
+          var target = event.target;
+          if (!(target instanceof Element)) return;
+
+          if (target.closest('#open-mobile-menu-btn')) {
+            event.preventDefault();
+            var opening = menu.classList.contains('hidden');
+            if (opening) {
+              previousOverflow = document.body.style.overflow;
+            }
+            setOpen(opening);
+            return;
+          }
+
+          if (target.closest('[data-mobile-nav-close]')) {
+            event.preventDefault();
+            setOpen(false);
+            return;
+          }
+
+          var dropdown = target.closest('[data-mobile-nav-toggle]');
+          if (dropdown) {
+            event.preventDefault();
+            var panel = dropdown.parentElement && dropdown.parentElement.nextElementSibling;
+            var expanded = dropdown.getAttribute('aria-expanded') === 'true';
+            dropdown.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+            var chevron = dropdown.querySelector('i');
+            if (chevron) {
+              chevron.classList.toggle('rotate-180', !expanded);
+              chevron.classList.toggle('text-eurogold-400', !expanded);
+            }
+            if (panel && panel.hasAttribute('data-mobile-nav-panel')) {
+              panel.classList.toggle('hidden', expanded);
+            }
+          }
+        });
+
+        document.addEventListener('keydown', function (event) {
+          if (event.key === 'Escape' && !menu.classList.contains('hidden')) {
+            setOpen(false);
+          }
+        });
+
+        window.addEventListener('resize', function () {
+          if (window.innerWidth >= 1280 && !menu.classList.contains('hidden')) {
+            setOpen(false);
+          }
+        });
+      })();
+    </script>
 
     <!-- Site search modal (vanilla JS, no hydration required) -->
     <SiteSearchModal />

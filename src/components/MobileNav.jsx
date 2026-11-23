@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { SITE } from '../data/site';
 
 const MENU_ITEMS = [
@@ -98,36 +98,14 @@ const MENU_ITEMS = [
 ];
 
 export default function MobileNav() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [expandedIndex, setExpandedIndex] = useState(null);
-
-  useEffect(() => {
-    const handleOpen = () => setIsOpen(true);
-    const triggerBtn = document.getElementById('open-mobile-menu-btn');
-    if (triggerBtn) {
-      triggerBtn.addEventListener('click', handleOpen);
-    }
-    return () => {
-      if (triggerBtn) {
-        triggerBtn.removeEventListener('click', handleOpen);
-      }
-    };
-  }, []);
-
-  const toggleDropdown = (index) => {
-    setExpandedIndex(expandedIndex === index ? null : index);
-  };
-
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-[9999] flex bg-black/95 backdrop-blur-2xl text-white">
+    <div id="mobile-nav" aria-hidden="true" className="hidden fixed inset-0 z-[9999] bg-black/95 backdrop-blur-2xl text-white">
       <div className="w-full h-full p-6 overflow-y-auto relative flex flex-col justify-between">
         
         <div>
           {/* Header Bar */}
           <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
-            <a href="/" onClick={() => setIsOpen(false)} className="inline-block">
+            <a href="/" data-mobile-nav-close className="inline-block">
               <img 
                 src="https://res.cloudinary.com/dwnnakrrh/image/upload/f_webp,q_auto:good,w_1600/v1782367859/eurocert/Untitled_design_19_.png.webp" 
                 alt="Eurocert Asia Logo" 
@@ -136,7 +114,7 @@ export default function MobileNav() {
             </a>
             <button
               type="button"
-              onClick={() => setIsOpen(false)}
+              data-mobile-nav-close
               className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-2xl text-white/90 hover:text-white transition-colors"
               aria-label="Close mobile navigation"
             >
@@ -146,16 +124,15 @@ export default function MobileNav() {
 
           {/* Nav List with Expandable Service Dropdowns */}
           <nav className="space-y-1 text-sm font-semibold uppercase tracking-wider heading-font">
-            {MENU_ITEMS.map((item, idx) => {
+            {MENU_ITEMS.map((item) => {
               const hasChildren = item.children && item.children.length > 0;
-              const isExpanded = expandedIndex === idx;
 
               return (
                 <div key={item.title} className="border-b border-white/10 py-1">
                   <div className="flex items-center justify-between py-2">
                     <a 
-                      href={item.href} 
-                      onClick={() => setIsOpen(false)} 
+                      href={item.href}
+                      data-mobile-nav-close
                       className="hover:text-eurogold-400 transition-colors flex-1"
                     >
                       {item.title}
@@ -164,23 +141,24 @@ export default function MobileNav() {
                     {hasChildren && (
                       <button
                         type="button"
-                        onClick={() => toggleDropdown(idx)}
+                        data-mobile-nav-toggle
+                        aria-expanded="false"
                         className="p-2 text-white/70 hover:text-eurogold-400 transition-transform duration-300"
                         aria-label={`Toggle ${item.title} submenu`}
                       >
-                        <i className={`fas fa-chevron-down text-xs transition-transform duration-300 ${isExpanded ? 'rotate-180 text-eurogold-400' : ''}`}></i>
+                        <i className="fas fa-chevron-down text-xs transition-transform duration-300"></i>
                       </button>
                     )}
                   </div>
 
                   {/* Submenu Dropdown List */}
-                  {hasChildren && isExpanded && (
-                    <div className="pl-4 pb-3 pt-1 space-y-2.5 normal-case font-sans text-xs text-white/80 border-l-2 border-eurogold-400/40 ml-2 my-1 animate-fadeIn">
+                  {hasChildren && (
+                    <div data-mobile-nav-panel className="hidden pl-4 pb-3 pt-1 space-y-2.5 normal-case font-sans text-xs text-white/80 border-l-2 border-eurogold-400/40 ml-2 my-1 animate-fadeIn">
                       {item.children.map((child) => (
                         <a
                           key={child.title}
                           href={child.href}
-                          onClick={() => setIsOpen(false)}
+                          data-mobile-nav-close
                           className="block py-1 hover:text-eurogold-400 transition-colors flex items-center gap-2"
                         >
                           <span className="w-1.5 h-1.5 rounded-full bg-eurogold-400/60"></span>
